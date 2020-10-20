@@ -41,31 +41,29 @@ namespace LinkedListProblem
         }
         internal Node InsertAtParticularPosition(int position, int data)
         {
-            if (position < 1)
-                Console.WriteLine("Invalid position");
-            if (position == 1)
+            Node newestNode = new Node(data);
+            if (this.head == null)
             {
-                var newNode = new Node(data);
-                newNode.next = this.head;
-                head = newNode;
+                return newestNode;
             }
-            else
+            if (position == 0)
             {
-                while (position-- != 0)
-                {
-                    if (position == 1)
-                    {
-                        Node node = new Node(data);
-                        node.next = this.head.next;
-                        head.next = node;
-                        break;
-                    }
-                    head = head.next;
-                }
-                if (position != 1)
-                    Console.WriteLine("Position out of range");
+                newestNode.next = this.head;
+                this.head = newestNode;
+                return this.head;
             }
-            return head;
+            Node prev = null;
+            Node current = this.head;
+            int count = 0;
+            while (current != null && count < position)
+            {
+                prev = current;
+                current = current.next;
+                count++;
+            }
+            newestNode.next = prev.next;
+            prev.next = newestNode;
+            return this.head;
         }
         internal Node RemoveFirstNode()
         {
@@ -94,17 +92,45 @@ namespace LinkedListProblem
             NewNode.next = null;
             return head;
         }
-        internal Node Search(int value)
+        internal int Search(int value)
         {
-            while (this.head != null)
+            Node node = this.head;
+            int count = 0;
+            while (node != null)
             {
-                if (this.head.data == value)
+               
+                if (node.data == value)
                 {
-                    return this.head;
+                    return count;
                 }
-                this.head = this.head.next;
+                node = node.next;
+                count++;
             }
-            return null;
+            return count;
+        }
+        internal void DeleteNodeAtParticularPosition(int position)
+        {
+            if (this.head == null)
+            {
+                Console.WriteLine("LinkedList is empty");
+                return;
+            }
+            Node temp = this.head;
+            if (position == 0)
+            {
+                this.head = temp.next;
+                return;
+            }
+            for (int i = 0; temp != null && i < position - 1; i++)
+            {
+                temp = temp.next;
+            }
+            if (temp == null || temp.next == null)
+            {
+                return;
+            }
+            Node next = temp.next.next;
+            temp.next = next; 
         }
     }
 }
