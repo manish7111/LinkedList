@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using System.Text;
 
+/// <summary>
+/// UC-10
+/// </summary>
 namespace LinkedListProblem
 {
     public class Node<T>
